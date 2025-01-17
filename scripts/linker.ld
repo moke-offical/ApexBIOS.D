@@ -1,3 +1,11 @@
+/*
+ *		linker.ld
+ *		针对 BIOS 所写的链接脚本
+ *
+ *		基于 MIT 开源协议
+ *		Copyright © 2020 ViudiraTech，保留最终解释权。
+ */
+
 OUTPUT_ARCH(i8086)
 
 main_address = 4096M - 4K;

@@ -42,13 +42,11 @@ entry:
 	movw $gdtptr_offset, %bx
 	subw %ax, %bx
 	lgdtl %cs:(%bx)
-1:
-	movl %cr0, %eax
+1:	movl %cr0, %eax
 	andl $0x7FFAFFD1, %eax
 	orl	$0x60000001, %eax
 	movl %eax, %cr0
-2:
-	movl %ebp, %eax
+2:	movl %ebp, %eax
 	ljmpl $0x08, $protected_mode_entry
 
 gdt:
@@ -102,6 +100,49 @@ enable_sse:
 	or $(1 <<  9), %ax
 	mov %eax, %cr4
 
+init_superio:
+	mov $0x2e, %dx
+	in %dx, %al
+	in %dx, %al
+	mov $superio_conf, %si
+	mov $(superio_conf_end - superio_conf) / 2, %cx
+.write_superio_conf:
+	mov (%si), %ax
+	mov $0x2e, %dx
+	out %al, %dx
+	inc %dx
+	xchg %al, %ah
+	out %al, %dx
+	add $0x02, %si
+	loop .write_superio_conf
+
+init_serial:
+	mov $serial_conf, %si
+	mov $(serial_conf_end - serial_conf) / 2, %cx
+.write_serial_conf:
+	mov (%si), %ax
+	mov $0x3f8, %dx
+	add %dl, %al
+	mov %ah, %al
+	out %al, %dx
+	add $0x02, %si
+	loop .write_serial_conf
+
 done:
 	hlt
 	jmp done
+
+superio_conf:
+	.byte 0x00, 0x0f
+	.byte 0x01, 0x10
+	.byte 0x02, 0x00
+superio_conf_end:
+
+serial_conf:
+	.byte 0x04, 0x00
+	.byte 0x02, 0x07
+	.byte 0x03, 0x80
+	.byte 0x00, 0x01
+	.byte 0x01, 0x00
+	.byte 0x03, 0x03
+serial_conf_end:

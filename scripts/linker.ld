@@ -10,6 +10,9 @@ OUTPUT_ARCH(i8086)
 
 main_address = 4096M - 4K;
 
+gdtptr_offset = gdtptr & 0xffff;
+nullidt_offset = nullidt & 0xffff;
+
 MEMORY {
 	ROM (rx) : org = 4096M - 512K, len = 512K
 }

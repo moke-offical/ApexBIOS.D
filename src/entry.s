@@ -75,7 +75,7 @@ nullidt:
 	.long 0
 	.word 0
 
-.code16
+.code32
 
 .globl protected_mode_entry
 protected_mode_entry:

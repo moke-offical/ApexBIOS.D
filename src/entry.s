@@ -75,19 +75,7 @@ nullidt:
 
 .code32
 
-.globl protected_mode_entry
 protected_mode_entry:
-	movl %eax, %ebp
-
-	movw $0x10, %ax
-	movw %ax, %ds
-	movw %ax, %es
-	movw %ax, %ss
-	xor	%ax, %ax
-	movw %ax, %fs
-	movw %ax, %gs
-
-	movl %ebp, %eax
 	movd %eax, %mm0
 
 __timestamp:
@@ -128,9 +116,38 @@ init_serial:
 	add $0x02, %si
 	loop .write_serial_conf
 
+print_start:
+	movl $start, %esi
+	call print_str
+
+	movl $copy, %esi
+	call print_str
+
 done:
 	hlt
 	jmp done
+
+putchar:
+	mov $0x3f8 + 0x05, %dx
+	mov %al, %ah
+.tx_wait:
+	in %dx, %al
+	and $0x20, %al
+	jz .tx_wait
+	mov $0x3f8 + 0x00, %dx
+	mov %ah, %al
+	out %al, %dx
+	ret
+
+print_str:
+	movb (%esi), %al
+	test %al, %al
+	jz .end_print
+	call putchar
+	inc %esi
+	jmp print_str
+.end_print:
+	ret
 
 superio_conf:
 	.byte 0x00, 0x0f
@@ -146,3 +163,9 @@ serial_conf:
 	.byte 0x01, 0x00
 	.byte 0x03, 0x03
 serial_conf_end:
+
+start:
+	.string "ApexBIOS v0.01\r\n"
+
+copy:
+	.string "Copyright (c) 2020 ViudiraTech.\r\n"

@@ -1,53 +1,45 @@
-# =====================================================
-#		Makefile
-#		ApexBIOS 编译脚本
-#
-#		基于 MIT 开源协议
-#		Copyright © 2020 ViudiraTech，保留最终解释权。
-# =====================================================
+ifeq ($(VERBOSE), 1)
+  V=
+  Q=
+else
+  V=@printf "\033[1;32m[Build]\033[0m $@ ...\n";
+  Q=@
+endif
 
-# 编译器和工具
-ASM			:= as
-LD			:= ld
-OBJCOPY		:= objcopy
+ASM			= nasm
+ASMFLAGS	= -fbin
 
-# 编译和链接选项
-SFLAGS		:= --32
-LDFLAGS		:= -mi386pe
+CC			= gcc
+CFLAGS		= -m32 -ffreestanding -fno-pic -w -Os -I ./src/include/
 
-# 目录和文件
-LINKFILE	:= ./scripts/linker.ld
-SRCDIR		:= ./src/
-OBJS		:= $(SRCDIR)entry.o
+LD			= ld
+LDFLAGS		= -nostdlib -static -T scripts/linker.ld
 
-# 伪目标
-.PHONY: all clean run
+SRCDIR		:= src
+OBJDIR		:= build
 
-# 默认目标
-all: bios.rom
+rwildcard	= $(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(subst *,%,$2),$d))
+reverse		= $(if $(1),$(call reverse,$(wordlist 2,$(words $(1)),$(1)))) $(firstword $(1))
+SRC			= $(call rwildcard,$(SRCDIR),*.c)
+OBJS		= $(call reverse,$(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC)))
 
-# 清理目标
+OUTFILE		= bios.rom
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	@mkdir -p $(@D)
+	$(V)$(CC) $(CFLAGS) -c $^ -o $@
+
+build: clean $(OBJS)
+	@$(LD) $(LDFLAGS) $(OBJS) src/lib/logo.lib -o build/c_entry.bin
+	@printf "\n\033[1;32m[LINK]\033[0m Linking..."
+
+	@stat -L -c "" build/c_entry.bin
+	@$(ASM) $(ASMFLAGS) src/entry16.asm -o $(OUTFILE)
+	@printf "\033[1;32m[Done]\033[0m Compilation complete.\n\n"
+
 clean:
-	@echo "Cleaning..."
-	@rm -f -v $(SRCDIR)*.o $(SRCDIR)*.out bios.rom xMemLayout.map
-	@echo
+	@rm -rf build bios.rom
+	@printf "\033[1;32m[Done]\033[0m Clean done.\n\n"
 
-# 汇编文件生成目标文件
-$(SRCDIR)%.o: $(SRCDIR)%.s Makefile
-	@echo "[AS]  $<"
-	@$(ASM) $(SFLAGS) $< -o $@
-
-# 链接目标文件生成可执行文件
-$(SRCDIR)bios.out: $(OBJS) $(LINKFILE)
-	@echo "[LD]  $@"
-	@$(LD) $(LDFLAGS) -T$(LINKFILE) -o $@ $(OBJS) -Map xMemLayout.map
-
-# 生成 ROM 文件
-bios.rom: $(SRCDIR)bios.out
-	@echo "[ROM] $@"
-	@$(OBJCOPY) -O binary -j .begin -j .main -j .reset --gap-fill=0xff $< $@
-	@echo
-
-# 运行 BIOS ROM 文件
 run:
-	qemu-system-i386 -bios bios.rom -d in_asm
+	qemu-system-x86_64 -bios $(OUTFILE) -serial stdio -vga none -device ramfb -m 256M

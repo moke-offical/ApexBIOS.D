@@ -44,7 +44,7 @@ uint8_t floppy_read_fifo(void)
 	}
 }
 
-/* 从软盘控制器的数据寄存器中读取一个字节的数据 */
+/* 处理软盘驱动器中断 */
 void floppy_sense_intrerrupt(uint8_t *cylinler, uint8_t *status)
 {
 	floppy_do_command(FLOPPY_SENSE_COMMAND);

@@ -83,8 +83,8 @@ void RAMFB_put_str(char *str);
 /* 设置绘制颜色 */
 void RAMFB_set_color(uint32_t color);
 
-/* 设置光标位置 */
-void RAMFB_set_cursor(int x, int y);
+/* 设置光标行位 */
+void RAMFB_set_rows(int rows);
 
 /* 初始化RAMFB */
 void RAMFB_init(int width, int height);

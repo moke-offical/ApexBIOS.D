@@ -124,19 +124,11 @@ void RAMFB_set_color(uint32_t color)
 	Color = color;
 }
 
-/* 设置光标位置 */
-void RAMFB_set_cursor(int x, int y)
+/* 设置光标行位 */
+void RAMFB_set_rows(int rows)
 {
-	int new_x = x * (5 * FontScaling);
-	int new_y = y * (8 * FontScaling);
-
-	if (new_x < 0) new_x = 0;
-	if (new_x >= ScreenW) new_x = ScreenW - (5 * FontScaling);
-	if (new_y < 0) new_y = 0;
-	if (new_y >= ScreenH) new_y = ScreenH - (8 * FontScaling);
-
-	CursorX = new_x - (5 * FontScaling);
-	CursorY = new_y - (8 * FontScaling);
+	if (rows > 30 || rows < 1) return;
+	CursorY = (rows * (8 * FontScaling)) - (8 * FontScaling);
 }
 
 /* 初始化RAMFB */

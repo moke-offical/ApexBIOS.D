@@ -104,7 +104,7 @@ void RAMFB_put_char(int x, int y, char chr)
 void RAMFB_put_str(char *str)
 {
 	for(int i = 0; str[i] != 0; i++) {
-		if (CursorX + 5 * FontScaling >= ScreenW) {
+		if (CursorX + 4 * FontScaling >= ScreenW) {
 			CursorY += 8 * FontScaling;
 			CursorX = 0;
 		}
@@ -113,7 +113,7 @@ void RAMFB_put_str(char *str)
 			CursorX = 1;
 		} else {
 			RAMFB_put_char(CursorX, CursorY, str[i]);
-			CursorX += 5 * FontScaling;
+			CursorX += 4 * FontScaling;
 		}
 	}
 }

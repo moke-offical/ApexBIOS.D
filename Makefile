@@ -30,7 +30,7 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	$(V)$(CC) $(CFLAGS) -c $^ -o $@
 
 build: clean $(OBJS)
-	@$(LD) $(LDFLAGS) $(OBJS) src/lib/logo.lib -o build/c_entry.bin
+	@$(LD) $(LDFLAGS) $(OBJS) src/lib/logo.lib src/lib/EPA.lib -o build/c_entry.bin
 	@printf "\n\033[1;32m[LINK]\033[0m Linking..."
 
 	@stat -L -c "" build/c_entry.bin

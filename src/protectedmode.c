@@ -19,6 +19,7 @@
 #include "eis.h"
 #include "bitmap.h"
 #include "logo.lib.h"
+#include "EPA.lib.h"
 
 /* BIOS保护模式入口 */
 extern void C_ENTRY(void)
@@ -48,9 +49,11 @@ extern void C_ENTRY(void)
 
 	/* 初始化VGA */
 	RAMFB_init(640, 480);
+	RAMFB_set_color(0xA8A8A8);
 
 	/* ↓BIOS界面↓ */
 	bmp_analysis((Bmp *)logo, 8, 11, 1);
+	bmp_analysis((Bmp *)EPA, 480, 16, 1);
 
 	RAMFB_put_str("\n        Apex Modular BIOS v0.01.\n");
 	RAMFB_put_str("        Copyright (C) 2020 ViudiraTech.\n\n");

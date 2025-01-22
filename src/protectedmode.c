@@ -55,8 +55,8 @@ extern void C_ENTRY(void)
 	bmp_analysis((Bmp *)logo, 8, 11, 1);
 	bmp_analysis((Bmp *)EPA, 480, 16, 1);
 
-	RAMFB_put_str("\n        Apex Modular BIOS v0.01.\n");
-	RAMFB_put_str("        Copyright (C) 2020 ViudiraTech.\n\n");
+	RAMFB_put_str("\n         Apex Modular BIOS v0.01.\n");
+	RAMFB_put_str("         Copyright (C) 2020 ViudiraTech.\n\n");
 
 	RAMFB_put_str("Chipset: ");
 

@@ -29,7 +29,9 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(@D)
 	$(V)$(CC) $(CFLAGS) -c $^ -o $@
 
-build: clean $(OBJS)
+.PHONY: build clean run
+
+build: $(OBJS)
 	@$(LD) $(LDFLAGS) $(OBJS) src/lib/logo.lib src/lib/EPA.lib -o build/c_entry.bin
 	@printf "\n\033[1;32m[LINK]\033[0m Linking..."
 

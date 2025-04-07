@@ -1,6 +1,4 @@
-# ApexBIOS 项目 README
-
-## 项目简介
+# ApexBIOS 项目简介
 ApexBIOS 是一个基于 x86 架构的简易 BIOS 程序，旨在实现基本的输入输出功能。该项目遵循 MIT 开源协议。
 
 ## 项目结构
@@ -31,7 +29,7 @@ ApexBIOS 是一个基于 x86 架构的简易 BIOS 程序，旨在实现基本的
 - 由于 BIOS 程序与硬件密切相关，修改代码时需谨慎，以免导致系统不稳定或无法启动。
 
 ## 贡献与反馈
-欢迎各位开发者参与项目贡献，包括但不限于代码优化、功能扩展、文档完善等。如有任何问题或建议，请通过 [项目仓库](https://github.com/ViudiraTech/ApexBIOS) 提交 issue 或 pull request，我们将及时回复和处理。
+欢迎各位开发者参与项目贡献，包括但不限于代码优化、功能扩展、文档完善等。如有任何问题或建议，请通过 [本项目仓库](https://github.com/moke-offical/ApexBIOS) 提交 issue 或 pull request，我们将及时回复和处理。
 
 ## 版权信息
 基于 MIT 开源协议，Copyright © 2020 ViudiraTech，保留最终解释权。

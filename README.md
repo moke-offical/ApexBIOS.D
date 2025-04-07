@@ -1,8 +1,6 @@
-# ApexBIOS 项目
+# 欢迎探索 ApexBIOS！
 
-## 欢迎探索 ApexBIOS！
-
-这是一个开源的 BIOS 项目，旨在为qemu平台提供灵活、可定制的启动固件。我们的目标是创建一个稳定、高效且易于扩展的 BIOS 系统，以满足不同用户的需求。
+这是一个开源的 BIOS 项目，旨在为 QEMU 平台提供灵活、可定制的启动固件。我们的目标是创建一个稳定、高效且易于扩展的 BIOS 系统，以满足不同用户的需求。
 
 ### 核心功能
 
@@ -47,8 +45,9 @@ BIOS 支持传统的 55AA 方式启动，这是通过读取硬盘的 MBR（主�
 
 - **代码贡献**：如果你熟悉 C 语言和硬件编程，可以参与代码的编写和优化，帮助我们改进 BIOS 的功能和性能。
 - **文档编写**：良好的文档对于项目的成功至关重要。你可以帮助我们编写技术文档、用户手册或开发指南，让其他开发者和用户更容易理解和使用我们的 BIOS。
-- **测试与反馈**：在qemu平台上测试 BIOS，提供详细的测试报告和反馈，帮助我们发现和修复潜在的问题。
+- **测试与反馈**：在 QEMU 平台上测试 BIOS，提供详细的测试报告和反馈，帮助我们发现和修复潜在的问题。
 
 ### 联系我们
 
-- **项目主页**：[https://github.com/ViudiraTech/ApexBIOS](https://github.com/ViudiraTech/ApexBIOS)
+- **原项目主页**：[ViudiraTech/ApexBIOS](https://github.com/ViudiraTech/ApexBIOS)
+- **本项目主页**：[moke-offical/ApexBIOS](https://github.com/moke-offical/ApexBIOS)

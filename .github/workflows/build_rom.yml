@@ -1,0 +1,23 @@
+name: Build ROM CI
+ 
+on:
+   workflow_dispatch:
+ 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install dependencies
+        run: pkg install nasm gcc ld
+      
+      - name: Make ROM
+        run: make
+      
+      - name: Upload artifact
+        uses: actions/upload-artifact@4
+        with:
+          name: rom
+          path: bios.rom

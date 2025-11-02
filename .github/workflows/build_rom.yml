@@ -11,13 +11,15 @@ jobs:
       - uses: actions/checkout@v4
       
       - name: Install dependencies
-        run: pkg install nasm gcc ld
+        run: sudo apt-get install nasm gcc ld
       
       - name: Make ROM
-        run: make
+        run: make format && make build
       
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: rom
           path: bios.rom
+      - name: Clean project
+        run: make clean

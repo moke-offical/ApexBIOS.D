@@ -58,7 +58,7 @@ format: $(C_SOURCES:%=%.fmt) $(S_SOURCES:%=%.fmt) $(HEADERS:%=%.fmt)
 
 build: $(OBJS)
     # 链接文件生成可执行文件
-	@$(LD) $(LDFLAGS) $(SPTDIR)/linker.ld $(OBJS) $(LIBDIR)/logo.lib $(LIBDIRDIR)/EPA.lib -o $(OBJDIR)/c_entry.bin
+	@$(LD) $(LDFLAGS) $(SPTDIR)/linker.ld $(OBJS) $(LIBDIR)/logo.lib $(LIBDIR)/EPA.lib -o $(OBJDIR)/c_entry.bin
 	@printf "\n\033[1;32m[LINK]\033[0m Linking..."
 
     # 汇编文件生成 ROM 文件

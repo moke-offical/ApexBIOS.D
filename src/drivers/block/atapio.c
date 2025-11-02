@@ -23,7 +23,7 @@ char *ata_read_lba(uint32_t lba, void *buffer)
 	for (int i = 0; i < 256; i++) {
 		*((uint16_t*)ATA_BUFFER + i) = inw(ATA_MASTER);
 	}
-	memcpy(buffer,ATA_BUFFER,512);
+	memcpy(buffer,(void*)ATA_BUFFER,512);
 	return buffer;
 }
 

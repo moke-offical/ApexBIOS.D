@@ -34,7 +34,7 @@ void *memcpy(void *dest, const void *src, uint32_t len)
 }
 
 /* 设置内存区域的值 */
-void memset(void *dest, int val, uint32_t len)
+void *memset(void *dest, int val, uint32_t len)
 {
 	while (len-- > 0) *((uint8_t*)dest++) = val;
 	return dest;

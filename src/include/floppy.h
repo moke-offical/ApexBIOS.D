@@ -45,7 +45,7 @@ void floppy_do_command(uint8_t command);
 uint8_t floppy_read_fifo(void);
 
 /* 处理软盘驱动器中断 */
-void floppy_sense_intrerrupt(uint8_t *cylinler, uint8_t *status);
+void floppy_sense_intrerrupt(int *cylinler, int *status);
 
 /* 启动软盘驱动器的电机 */
 void floppy_start_motor(void);

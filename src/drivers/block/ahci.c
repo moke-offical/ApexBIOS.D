@@ -7,6 +7,7 @@
  */
 
 #include "ahci.h"
+#include "pci.h"
 
 /* AHCI控制器是否存在 */
 uint8_t ahci_detect_controller(void)

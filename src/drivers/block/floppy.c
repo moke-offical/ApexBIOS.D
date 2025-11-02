@@ -45,7 +45,7 @@ uint8_t floppy_read_fifo(void)
 }
 
 /* 处理软盘驱动器中断 */
-void floppy_sense_intrerrupt(uint8_t *cylinler, uint8_t *status)
+void floppy_sense_intrerrupt(int *cylinler, int *status)
 {
 	floppy_do_command(FLOPPY_SENSE_COMMAND);
 	*status = floppy_read_fifo();

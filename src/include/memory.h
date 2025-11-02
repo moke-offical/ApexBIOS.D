@@ -21,6 +21,6 @@ uint32_t ram_detect(void);
 void *memcpy(void *dest, const void *src, uint32_t len);
 
 /* 设置内存区域的值 */
-void memset(void *dest, int val, uint32_t len);
+void *memset(void *dest, int val, uint32_t len);
 
 #endif // INCLUDE_MEMORY_H_

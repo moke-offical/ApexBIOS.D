@@ -7,7 +7,7 @@
  */
 
 #include "serial.h"
-#include "pci.h"
+#include "pic.h"
 #include "memory.h"
 #include "ramfb.h"
 #include "ps2.h"
@@ -20,6 +20,9 @@
 #include "bitmap.h"
 #include "logo.lib.h"
 #include "EPA.lib.h"
+
+/* 来自RoofAlan */
+int inttostr(uint32_t num);
 
 /* BIOS保护模式入口 */
 extern void C_ENTRY(void)
@@ -79,7 +82,7 @@ extern void C_ENTRY(void)
 	RAMFB_put_str("\n");
 
 	RAMFB_put_str("Memory: ");
-	RAMFB_put_str(inttostr(ram_detect()));
+	RAMFB_put_str((char*)inttostr(ram_detect()));
 	RAMFB_put_str("K\n\n");
 
 	RAMFB_put_str("Detecting AHCI   ... ");
@@ -97,7 +100,7 @@ extern void C_ENTRY(void)
 	RAMFB_put_str("Detecting Floppy ... ");
 	if (floppy_get_drives()) {
 		RAMFB_put_str("Floppy Number: ");
-		RAMFB_put_str(inttostr(floppy_get_drives()));
+		RAMFB_put_str((char*)inttostr(floppy_get_drives()));
 		RAMFB_put_str("\n\n");
 	} else {
 		RAMFB_put_str("Floppy Not present.\n\n");
@@ -107,7 +110,7 @@ extern void C_ENTRY(void)
 	if (ata_controller_detect() && ata_driver_detect()) {
 		RAMFB_put_str("Booting from Hard Disk...\n");
 		memset((void*)0x7C00, 0, 512);
-		ata_read_lba(0, 0x7c00);
+		ata_read_lba(0, (void*)0x7c00);
 		if (*((uint16_t*)0x7dfe) == 0xAA55) {
 			void (*boot)(void) = (void (*)(void))(0x7c00);
 			boot();

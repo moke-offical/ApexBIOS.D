@@ -87,7 +87,7 @@ void RAMFB_put_rect(int x, int y, int w, int h, uint32_t clr)
 /* 在指定位置绘制一个字符 */
 void RAMFB_put_char(int x, int y, char chr)
 {
-	uint32_t *screen = VideoMemory;
+	uint32_t *screen = (uint32_t*)VideoMemory;
 	uint8_t *font = BitmapFont;
 	font += chr * 16;
 
@@ -151,7 +151,7 @@ void RAMFB_init(int width, int height)
 		ScreenH = height;
 		Color = 0xFFFFFF;
 	
-		memset(VideoMemory, 0, (width * height) * (32 / 8));
+		memset((void*)VideoMemory, 0, (width * height) * (32 / 8));
 	} else {
 		__asm__ volatile ("hlt");
 	}

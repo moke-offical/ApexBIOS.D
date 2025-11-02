@@ -45,8 +45,16 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(@D)
 	$(V)$(CC) $(CFLAGS) -I ./$(ICLDIR)/ -c $^ -o $@
 
+%.fmt: %
+	$(Q)printf "\033[1;32m[Format]\033[0m $< ...\n"
+	$(Q)clang-format -i $<
+
 # 伪目标
-.PHONY: build clean run
+.PHONY: format build clean run
+
+# 格式化代码
+format: $(C_SOURCES:%=%.fmt) $(S_SOURCES:%=%.fmt) $(HEADERS:%=%.fmt)
+	$(Q)printf "\033[1;32m[Done]\033[0m Code Format complete.\n\n"
 
 build: $(OBJS)
     # 链接文件生成可执行文件
